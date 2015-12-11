@@ -1,23 +1,28 @@
+import fs from 'fs'; // this engine requires the fs module
 import express from 'express';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import dev from './dev';
+
 const app = express();
 
+dev(app);
 
+app.engine('rayel', function (filePath, options, callback) { // define the template engine
+    var requiredComponent = require(filePath);
 
-import fs from 'fs'; // this engine requires the fs module
+    const component = React.createFactory(requiredComponent);
+    const componentInstance = component(options);
 
+    let html = "";
 
-app.engine('ray', function (filePath, options, callback) { // define the template engine
-  fs.readFile(filePath, function (err, content) {
-    if (err) return callback(new Error(err));
-    // this is an extremely simple template engine
-    var rendered = content.toString().replace('#title#', ''+ options.title +'')
-    .replace('#message#', ''+ options.message +'');
-    return callback(null, rendered);
-  })
+    html+= ReactDOMServer.renderToString(componentInstance);
+
+    callback(null,html);
 });
 
-app.set('views', './views'); // specify the views directory
-app.set('view engine', 'ray'); // register the template engine
+app.set('views', './src/public/views'); // specify the views directory
+app.set('view engine', 'rayel'); // register the template engine
 
 app.get('/', (req, res) => {
   res.render('index', {'title':'hello world'});

@@ -1,0 +1,24 @@
+/* global __DEVELOPMENT__:true */
+import React from 'react';
+
+class Layout extends React.Component {
+
+	render() {
+		return (
+			<html>
+				<head>
+					<meta charSet='utf-8' />
+					<title>
+						{this.props.title}		
+					</title>
+				</head>	
+				<body>
+					Test			
+				  	<script src='/bundle.js'></script>
+				</body>		  				 
+			</html>
+		);
+	}
+};
+
+export default Layout;
