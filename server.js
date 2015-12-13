@@ -3,23 +3,13 @@ import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import dev from './dev';
+import viewEngine from './engine/viewEngine'
 
 const app = express();
 
 dev(app);
 
-app.engine('rayel', function (filePath, options, callback) { // define the template engine
-    var requiredComponent = require(filePath);
-
-    const component = React.createFactory(requiredComponent);
-    const componentInstance = component(options);
-
-    let html = "";
-
-    html+= ReactDOMServer.renderToString(componentInstance);
-
-    callback(null,html);
-});
+app.engine('rayel', viewEngine);
 
 app.set('views', './src/public/views'); // specify the views directory
 app.set('view engine', 'rayel'); // register the template engine

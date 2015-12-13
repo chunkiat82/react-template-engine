@@ -1,0 +1,15 @@
+/* global __DEVELOPMENT__:true */
+import React from 'react';
+
+class Body extends React.Component {
+
+	render() {
+		return (
+			<div>
+				Body Here
+			</div>
+		);
+	}
+};
+
+export default Body;

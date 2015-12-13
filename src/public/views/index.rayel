@@ -13,7 +13,7 @@ class Layout extends React.Component {
 					</title>
 				</head>	
 				<body>
-					Test			
+					{this.props.children}			
 				  	<script src='/bundle.js'></script>
 				</body>		  				 
 			</html>
